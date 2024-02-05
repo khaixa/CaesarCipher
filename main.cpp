@@ -5,27 +5,46 @@ std::string decrpytCaesarCipher(const std::string& ciphertext, int shift){
     std::string decrpytedText = "";
 
     for(char ch : ciphertext){
+        // Check if its alphabet
         if (isalpha(ch)){
+            // Determining base character
             char base = isupper(ch) ? 'A' : 'a';
+            // Decryption using caesar cipher algo
             decrpytedText += (ch - base - shift + 26) % 26 + base;
-        }else{
+        } else{
             decrpytedText += ch;
         }
     }
 
     return decrpytedText;
-
 }
 
 int main(){
-    std::string ciphertext;
-    std::cout << "Please enter the ciphertext: ";
-    std::getline(std::cin, ciphertext);
+    //Asking for amount of input
+    int numMessages;
 
+    do{
+        std::cout << "Please enter the number of messages (1 to 4): ";
+        std::cin >> numMessages;
+        std::cin.ignore();
+    
+        if(numMessages < 1 || numMessages > 4){
+            std::cout << "Invalid input. Please Try again.\n";
+    }
+} while (numMessages < 1 || numMessages > 4);
+
+for(int i = 0; i < numMessages; ++i){
+    std::string ciphertext;
+    // User prompt for the ciphertext
+    std::cout << "Please enter the ciphertext" << (i + 1) << ": ";
+    std::getline(std::cin, ciphertext);
+    // Brute-force attack
     for (int shift =1; shift <= 25; ++shift){
         std::string decryptedText = decrpytCaesarCipher(ciphertext, shift);
         std::cout << "Shift " << shift << ": " << decryptedText << '\n';
     }
-    
+    //std::cout <<
+}
+
     return 0;
 }
