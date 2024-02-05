@@ -24,27 +24,37 @@ int main(){
     int numMessages;
 
     do{
-        std::cout << "Please enter the number of messages (1 to 4): ";
-        std::cin >> numMessages;
-        std::cin.ignore();
-    
-        if(numMessages < 1 || numMessages > 4){
-            std::cout << "Invalid input. Please Try again.\n";
-    }
-} while (numMessages < 1 || numMessages > 4);
+        std::cout << "Please enter the number of messages (1 to 4, or X to exit): ";
+        std::string input;
+        std::getline(std::cin, input);
 
-for(int i = 0; i < numMessages; ++i){
-    std::string ciphertext;
-    // User prompt for the ciphertext
-    std::cout << "Please enter the ciphertext" << (i + 1) << ": ";
-    std::getline(std::cin, ciphertext);
-    // Brute-force attack
-    for (int shift =1; shift <= 25; ++shift){
-        std::string decryptedText = decrpytCaesarCipher(ciphertext, shift);
-        std::cout << "Shift " << shift << ": " << decryptedText << '\n';
+        if (input == "X" || input == "x"){
+            std::cout << "Exiting program. \n";
+            return 0;
+        } else{
+            try{
+                numMessages = std::stoi(input);
+                    if(numMessages < 1 || numMessages > 4){
+                        std::cout << "Invalid input. Please try again.\n";
+                    }
+            } catch (std::invalid_argument&){
+                std::cout << "Invalid input. Please try again.\n";
+            }
+        }
+    } while (numMessages < 1 || numMessages > 4);
+
+    for(int i = 0; i < numMessages; ++i){
+        std::string ciphertext;
+        // User prompt for the ciphertext
+        std::cout << "Please enter the ciphertext" << (i + 1) << ": ";
+        std::getline(std::cin, ciphertext);
+        // Brute-force attack
+        for (int shift =1; shift <= 25; ++shift){
+            std::string decryptedText = decrpytCaesarCipher(ciphertext, shift);
+            std::cout << "Shift " << shift << ": " << decryptedText << '\n';
+        }
+        
     }
-    //std::cout <<
-}
 
     return 0;
 }
